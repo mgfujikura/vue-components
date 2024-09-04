@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, unref } from 'vue';
+import * as R from 'remeda';
 
 const props = defineProps<{
   img?: string;
@@ -7,23 +8,40 @@ const props = defineProps<{
   imgDisabled?: string;
   width?: number;
   height?: number;
-  nineSlice?: {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-  };
-  shape?: 'square' | 'cupsule';
+  nineSlice?:
+    | number
+    | {
+        repeat?: string;
+        slice?: string;
+        width?: string;
+      };
+  shape?: 'square' | 'capsule';
   radius?: number;
 }>();
 
 const style = computed(() => {
   console.log('props', props);
   const style: any = {};
-  props.img && (style.background = `url(${props.img})`);
-  props.disabled && props.imgDisabled && (style.background = `url(${props.imgDisabled})`);
   props.width && (style.width = `${props.width}px`);
   props.height && (style.height = `${props.height}px`);
+  if (props.nineSlice) {
+    style.borderImage = `url(${props.img})`;
+    props.disabled && props.imgDisabled && (style.borderImage = `url(${props.imgDisabled})`);
+    if (R.isNumber(props.nineSlice)) {
+      style.borderImageWidth = `${props.nineSlice}px`;
+      style.borderImageSlice = `${props.nineSlice} fill`;
+    } else {
+      const nineSlice = props.nineSlice as any;
+      for (const p of Object.keys(nineSlice)) {
+        const name = 'borderImage' + p.charAt(0).toUpperCase() + p.slice(1);
+        style[name] = nineSlice[p];
+      }
+    }
+  } else {
+    props.img && (style.background = `center/100% 100% no-repeat url(${props.img})`);
+    props.disabled && props.imgDisabled && (style.background = `center/100% 100% no-repeat url(${props.imgDisabled})`);
+  }
+  props.shape == 'capsule' && (style.borderRadius = '9999px');
   console.log('style', style);
   return style;
 });
@@ -48,5 +66,8 @@ button.FwComponentBtn {
 }
 button.FwComponentBtn:active {
   background: none;
+}
+button.FwComponentBtn:hover {
+  cursor: pointer;
 }
 </style>
