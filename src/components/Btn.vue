@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, unref } from 'vue';
+import { computed } from 'vue';
 import * as R from 'remeda';
 
 const props = defineProps<{
@@ -22,11 +22,11 @@ const props = defineProps<{
 const style = computed(() => {
   console.log('props', props);
   const style: any = {};
-  props.width && (style.width = `${props.width}px`);
-  props.height && (style.height = `${props.height}px`);
+  if (props.width) style.width = `${props.width}px`;
+  if (props.height) style.height = `${props.height}px`;
   if (props.nineSlice) {
     style.borderImage = `url(${props.img})`;
-    props.disabled && props.imgDisabled && (style.borderImage = `url(${props.imgDisabled})`);
+    if (props.disabled && props.imgDisabled) style.borderImage = `url(${props.imgDisabled})`;
     if (R.isNumber(props.nineSlice)) {
       style.borderImageWidth = `${props.nineSlice}px`;
       style.borderImageSlice = `${props.nineSlice} fill`;
@@ -38,10 +38,10 @@ const style = computed(() => {
       }
     }
   } else {
-    props.img && (style.background = `center/100% 100% no-repeat url(${props.img})`);
-    props.disabled && props.imgDisabled && (style.background = `center/100% 100% no-repeat url(${props.imgDisabled})`);
+    if (props.img) style.background = `center/100% 100% no-repeat url(${props.img})`;
+    if (props.disabled && props.imgDisabled) style.background = `center/100% 100% no-repeat url(${props.imgDisabled})`;
   }
-  props.shape == 'capsule' && (style.borderRadius = '9999px');
+  if (props.shape == 'capsule') style.borderRadius = '9999px';
   console.log('style', style);
   return style;
 });
@@ -52,7 +52,7 @@ const style = computed(() => {
     :style="style"
     :disabled="disabled"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
 <style>
