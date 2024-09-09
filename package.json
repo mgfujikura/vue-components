@@ -1,5 +1,6 @@
 {
   "name": "@mgfujikura/vue-components",
+  "private": false,
   "version": "0.1.0",
   "types": "./types/lib.d.ts",
   "files": [
