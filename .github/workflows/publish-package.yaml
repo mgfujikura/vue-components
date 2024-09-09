@@ -24,6 +24,8 @@ jobs:
         with:
           registry-url: https://npm.pkg.github.com
           scope: '@mgfujikura'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build npm package
         run: pnpm i --frozen-lockfile && pnpm run build
@@ -31,4 +33,5 @@ jobs:
       - name: Publish npm package
         run: pnpm publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
