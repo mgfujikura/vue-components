@@ -1,0 +1,35 @@
+name: publish npm package
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkuout
+        uses: actions/checkout@v3
+
+      - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
+        run: echo 'ACTIONS_ALLOW_UNSECURE_COMMANDS=true' >> $GITHUB_ENV
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: '7'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: https://npm.pkg.github.com
+          scope: '@media-groove'
+
+      - name: Build npm package
+        run: pnpm i --frozen-lockfile && pnpm run build
+
+      - name: Publish npm package
+        run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
