@@ -17,12 +17,13 @@ const disabledCheck3 = ref(false);
       :width="100"
       :height="50"
       :disabled="disabledCheck"
-      >シンプルボタン</Btn
     >
+      シンプルボタン
+    </Btn>
     <input
-      type="checkbox"
       id="disabledCheck"
       v-model="disabledCheck"
+      type="checkbox"
     /><label for="disabledCheck">disabled</label>
     <h2>9-slice</h2>
     <Btn
@@ -32,12 +33,13 @@ const disabledCheck3 = ref(false);
       :height="40"
       :nine-slice="5"
       :disabled="disabledCheck2"
-      >9-Sliceボタン</Btn
     >
+      9-Sliceボタン
+    </Btn>
     <input
-      type="checkbox"
       id="disabledCheck2"
       v-model="disabledCheck2"
+      type="checkbox"
     /><label for="disabledCheck2">disabled</label>
     <h2>9-slice オブジェクト指定</h2>
     <Btn
@@ -49,8 +51,9 @@ const disabledCheck3 = ref(false);
         width: '5px',
         slice: '5',
       }"
-      >9-Sliceボタン</Btn
     >
+      9-Sliceボタン
+    </Btn>
     <h2>カプセル型</h2>
     <Btn
       img="/img/capsule-btn.png"
@@ -60,12 +63,13 @@ const disabledCheck3 = ref(false);
       shape="capsule"
       :nine-slice="15"
       :disabled="disabledCheck3"
-      >カプセル型ボタン</Btn
     >
+      カプセル型ボタン
+    </Btn>
     <input
-      type="checkbox"
       id="disabledCheck3"
       v-model="disabledCheck3"
+      type="checkbox"
     /><label for="disabledCheck3">disabled</label>
   </div>
 </template>

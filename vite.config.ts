@@ -16,8 +16,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/lib.ts'),
       name: 'fw-vue-components',
-      fileName: 'fw-vue-components.js',
-      formats: ['es', 'umd'],
+      fileName: 'fw-vue-components',
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['vue'],

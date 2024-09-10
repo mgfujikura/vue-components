@@ -1,18 +1,17 @@
 {
   "name": "@mgfujikura/vue-components",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.5",
+  "type": "module",
   "types": "./types/lib.d.ts",
   "files": [
     "dist",
     "types"
   ],
-  "main": "./dist/fw-vue-components.cjs",
-  "module": "./dist/fw-vue-components.js",
   "exports": {
     ".": {
-      "import": "./dist/fw-vue-components",
-      "require": "./dist/fw-vue-components"
+      "types": "./types/lib.d.ts",
+      "import": "./dist/fw-vue-components.js"
     },
     "./css": "./dist/style.css"
   },
