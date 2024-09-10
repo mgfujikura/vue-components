@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import Btn from '@/components/Btn.vue';
+import Overlay from '@/components/Overlay.vue';
 import { ref } from 'vue';
 
 const disabledCheck = ref(false);
 const disabledCheck2 = ref(false);
 const disabledCheck3 = ref(false);
+
+const overlay = ref(false);
 </script>
 
 <template>
@@ -71,6 +74,19 @@ const disabledCheck3 = ref(false);
       v-model="disabledCheck3"
       type="checkbox"
     /><label for="disabledCheck3">disabled</label>
+
+    <h1>Overlay</h1>
+    <input
+      id="overlay"
+      v-model="overlay"
+      type="checkbox"
+    /><label for="overlay">overlay</label>
+    <Overlay
+      v-model="overlay"
+      :close-on-click="true"
+    >
+      TEST
+    </Overlay>
   </div>
 </template>
 
