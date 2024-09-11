@@ -16,11 +16,10 @@ const props = defineProps<{
         width?: string;
       };
   shape?: 'square' | 'capsule';
-  radius?: number;
+  radius?: number | string;
 }>();
 
 const style = computed(() => {
-  console.log('props', props);
   const style: any = {};
   if (props.width) style.width = `${props.width}px`;
   if (props.height) style.height = `${props.height}px`;
@@ -42,7 +41,7 @@ const style = computed(() => {
     if (props.disabled && props.imgDisabled) style.background = `center/100% 100% no-repeat url(${props.imgDisabled})`;
   }
   if (props.shape == 'capsule') style.borderRadius = '9999px';
-  console.log('style', style);
+  else if (props.radius) style.borderRadius = R.isNumber(props.radius) ? props.radius + 'px' : props.radius;
   return style;
 });
 </script>
