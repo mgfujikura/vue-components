@@ -2,6 +2,8 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
+  style?: { [key: string]: any };
+  class?: any;
   color?: string;
   closeOnClick?: boolean;
 }>();
@@ -9,6 +11,10 @@ const model = defineModel<boolean>();
 
 const color = computed(() => {
   return props.color || '#00000099';
+});
+
+const cls = computed(() => {
+  return props.class;
 });
 
 const onClick = () => {
@@ -22,9 +28,13 @@ const onClick = () => {
     <div
       v-if="model"
       class="FwComponentOverlay"
-      :style="{
-        backgroundColor: color,
-      }"
+      :class="cls"
+      :style="[
+        {
+          backgroundColor: color,
+        },
+        style,
+      ]"
       @click="onClick"
     >
       <slot />
