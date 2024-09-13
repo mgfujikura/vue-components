@@ -41,7 +41,7 @@ const onClick = () => {
     </div>
   </Teleport>
 </template>
-<style scoped>
+<style>
 div.FwComponentOverlay {
   position: fixed;
   top: 0;
