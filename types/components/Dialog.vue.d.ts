@@ -20,7 +20,7 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_TypePropsToOp
         slice?: string;
         width?: string;
     };
-    radius: number | string;
+    radius?: number | string;
     dialogClass?: any;
     dialogStyle?: {
         [key: string]: any;
@@ -41,7 +41,7 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_TypePropsToOp
         slice?: string;
         width?: string;
     };
-    radius: number | string;
+    radius?: number | string;
     dialogClass?: any;
     dialogStyle?: {
         [key: string]: any;
