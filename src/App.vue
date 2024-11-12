@@ -121,7 +121,7 @@ const showDialogWithTitle = ref(false);
       img="/img/dialog-with-title.png"
     >
       <template #title>
-        <div style="color: white; font-waight: bold; text-align: center">ダイアログタイトル</div>
+        <div style="color: white; font-weight: bold; text-align: center">ダイアログタイトル</div>
       </template>
       <div style="height: 100%; display: flex; justify-content: center; align-items: center">
         <button @click="showDialogWithTitle = false">閉じる</button>
