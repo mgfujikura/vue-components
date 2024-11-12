@@ -15,7 +15,7 @@ const props = defineProps<{
         slice?: string;
         width?: string;
       };
-  radius: number | string;
+  radius?: number | string;
   dialogClass?: any;
   dialogStyle?: { [key: string]: any };
   backgroundColor?: string;
