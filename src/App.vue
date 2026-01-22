@@ -2,7 +2,9 @@
 import Btn from '@/components/Btn.vue';
 import Dialog from '@/components/Dialog.vue';
 import Overlay from '@/components/Overlay.vue';
-import { ref } from 'vue';
+import TileList from '@/components/TileList.vue';
+import { useScrollBottom, useScrollTop } from '@/composable/useScrollTopBottom.ts';
+import { ref, useTemplateRef } from 'vue';
 
 const disabledCheck = ref(false);
 const disabledCheck2 = ref(false);
@@ -12,6 +14,26 @@ const overlay = ref(false);
 
 const showSimpleDialog = ref(false);
 const showDialogWithTitle = ref(false);
+
+const scrollBox = useTemplateRef('scrollBox');
+useScrollTop(
+  scrollBox,
+  () => {
+    alert('Scrolled to top!');
+  },
+  {
+    ignoreInitial: true,
+  },
+);
+useScrollBottom(
+  scrollBox,
+  () => {
+    alert('Scrolled to bottom!');
+  },
+  {
+    ignoreInitial: true,
+  },
+);
 </script>
 
 <template>
@@ -127,6 +149,35 @@ const showDialogWithTitle = ref(false);
         <button @click="showDialogWithTitle = false">閉じる</button>
       </div>
     </Dialog>
+  </div>
+  <div>
+    <h2>useScrollTop, useScrollBottom</h2>
+    <div
+      ref="scrollBox"
+      style="height: 200px; overflow-y: scroll; border: 1px solid black"
+    >
+      <div
+        v-for="n in 100"
+        :key="n"
+      >
+        Item {{ n }}
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>TileList</h2>
+    <TileList
+      :columns="4"
+      gap="10px"
+    >
+      <div
+        v-for="n in 10"
+        :key="n"
+        style="border: black solid 1px"
+      >
+        Item {{ n }}
+      </div>
+    </TileList>
   </div>
 </template>
 
