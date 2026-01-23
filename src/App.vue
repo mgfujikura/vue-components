@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Btn from '@/components/Btn.vue';
-import Dialog from '@/components/Dialog.vue';
-import Overlay from '@/components/Overlay.vue';
-import TileList from '@/components/TileList.vue';
-import { useScrollBottom, useScrollTop } from '@/composable/useScrollTopBottom.ts';
+import Btn from './components/Btn.vue';
+import Dialog from './components/Dialog.vue';
+import Overlay from './components/Overlay.vue';
+import TileList from './components/TileList.vue';
+import { useScrollBottom, useScrollTop } from './composable/useScrollTopBottom.ts';
 import { ref, useTemplateRef } from 'vue';
 
 const disabledCheck = ref(false);
