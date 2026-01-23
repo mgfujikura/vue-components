@@ -34,7 +34,7 @@ export function useScrollBottom(
   );
 }
 
-export function useScrollEdge(
+function useScrollEdge(
   rootRef: { value: HTMLElement | null },
   sentinelAppender: (sentinel: HTMLElement) => void,
   callback: () => void,
