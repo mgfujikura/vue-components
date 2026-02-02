@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TextPlayer from './components/TextPlayer.vue';
+import Window from './components/Window.vue';
 import Btn from './components/Btn.vue';
 import Dialog from './components/Dialog.vue';
 import Overlay from './components/Overlay.vue';
@@ -34,6 +36,11 @@ useScrollBottom(
     ignoreInitial: true,
   },
 );
+
+const textPlayer = useTemplateRef('textPlayer');
+const endTextPlayer = () => {
+  alert('TextPlayer ended');
+};
 </script>
 
 <template>
@@ -179,6 +186,87 @@ useScrollBottom(
       </div>
     </TileList>
   </div>
+  <div>
+    <h2>TextPlayer</h2>
+    <div style="display: flex; gap: 10px; align-items: center">
+      <div class="TextWindow">
+        <TextPlayer
+          ref="textPlayer"
+          :text="`これはテキストプレイヤーのテストです。\n1文字ずつ表示されます。\n最大行数を超えたらスクロールします。\nクリックでendイベントが発火します。`"
+          :max-lines="3"
+          :type-interval="100"
+          @end="endTextPlayer"
+        />
+      </div>
+      <button @click="textPlayer?.start()">start</button>
+      <button @click="textPlayer?.pause()">pause</button>
+      <button @click="textPlayer?.reset()">reset</button>
+      <button @click="textPlayer?.end()">end</button>
+    </div>
+  </div>
+
+  <h2>Window</h2>
+  <h3>シンプル</h3>
+  <Window
+    :width="300"
+    :height="180"
+    img="/img/simple-dialog.png"
+    :title-height="32"
+    :radius="12"
+    :nine-slice="20"
+    window-class="custom-window"
+    :window-style="{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }"
+  >
+    <template #title>
+      <div style="text-align: center; font-weight: bold; color: #333">Windowタイトル</div>
+    </template>
+    <div style="padding: 1em; text-align: center">
+      これはWindow.vueのサンプルです。<br />
+      任意の内容を表示できます。
+    </div>
+  </Window>
+  <div style="margin-top: 2em">
+    <h2>Window（ノベルゲーム風サンプル）</h2>
+    <Window
+      :width="500"
+      :height="200"
+      img="/img/nine-slice-window.png"
+      :title-height="0"
+      :radius="0"
+      :nine-slice="{
+        slice: '90 90 90 420 fill',
+        width: '90px 90px 90px 420px',
+        repeat: 'stretch',
+      }"
+      window-class="novel-window"
+    >
+      <template #title>
+        <div style="padding-left: 70px; padding-top: 13px; font-size: 1.5em; font-weight: bold; color: white">
+          ノベルゲーム風
+        </div>
+      </template>
+      <div style="padding: 1.5em 0 0 4em; font-size: 1.1em; color: wheat; line-height: 1.7">
+        彼女は静かに窓の外を見つめていた。<br />
+        「……明日も晴れるといいね」<br />
+        その声は、どこか遠くを思うように優しかった。
+      </div>
+    </Window>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.custom-window {
+  border: 2px solid #1976d2;
+}
+.TextWindow {
+  width: 12em;
+  height: 3lh;
+  border: 2px solid black;
+  padding: 0.2em;
+  background-color: #f0f0f0;
+}
+.novel-window {
+  border: none;
+  background: transparent;
+}
+</style>
