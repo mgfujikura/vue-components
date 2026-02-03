@@ -26,6 +26,10 @@ https://docs.github.com/ja/packages/working-with-a-github-packages-registry/work
 
 ### TileList タイルリスト
 
+### TextPlayer テキストプレーヤー
+
+##$ Window ウィンドウ
+
 ## コンポーザブル
 
 ### useScrollTop, useScrollBottom
