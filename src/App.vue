@@ -6,7 +6,8 @@ import Dialog from './components/Dialog.vue';
 import Overlay from './components/Overlay.vue';
 import TileList from './components/TileList.vue';
 import { useScrollBottom, useScrollTop } from './composable/useScrollTopBottom.ts';
-import { ref, useTemplateRef } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
+import { usePointerDrag } from './composable/usePointerDrag.ts';
 
 const disabledCheck = ref(false);
 const disabledCheck2 = ref(false);
@@ -41,6 +42,35 @@ const textPlayer = useTemplateRef('textPlayer');
 const endTextPlayer = () => {
   alert('TextPlayer ended');
 };
+
+const draggableArea = useTemplateRef('draggableArea');
+const dragBox = useTemplateRef('dragBox');
+const dragInfo = usePointerDrag(dragBox, draggableArea);
+let isDragged = false;
+const pos = computed(() => {
+  if (!isDragged) {
+    if (!dragInfo.isDragging.value) {
+      return { x: 100, y: 100 };
+    } else {
+      isDragged = true;
+    }
+  }
+
+  if (!dragBox.value || !draggableArea.value) {
+    return { x: 0, y: 0 };
+  }
+  const area = draggableArea.value.getBoundingClientRect();
+  const box = dragBox.value.getBoundingClientRect();
+  const max = {
+    x: area.width - box.width,
+    y: area.height - box.height,
+  };
+
+  return {
+    x: Math.min(Math.max(0, dragInfo.pos.value.x - dragInfo.offset.value.x), max.x),
+    y: Math.min(Math.max(0, dragInfo.pos.value.y - dragInfo.offset.value.y), max.y),
+  };
+});
 </script>
 
 <template>
@@ -252,6 +282,23 @@ const endTextPlayer = () => {
       </div>
     </Window>
   </div>
+
+  <h2>usePointerDrag</h2>
+  <div
+    ref="draggableArea"
+    class="DraggableArea"
+  >
+    <div
+      ref="dragBox"
+      class="DragBox"
+      :style="{
+        top: pos.y + 'px',
+        left: pos.x + 'px',
+      }"
+    >
+      Drag me!
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -268,5 +315,28 @@ const endTextPlayer = () => {
 .novel-window {
   border: none;
   background: transparent;
+}
+.DraggableArea {
+  width: 100%;
+  height: 300px;
+  border: 2px dashed #999;
+  background-color: #ccc;
+  position: relative;
+  margin-bottom: 1em;
+}
+.DragBox {
+  width: 150px;
+  height: 150px;
+  background: #4caf50;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+  position: absolute;
+  border-radius: 8px;
+  top: 10px;
+  left: 100px;
 }
 </style>

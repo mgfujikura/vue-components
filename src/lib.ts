@@ -5,5 +5,6 @@ import TileList from './components/TileList.vue';
 import { useScrollTop, useScrollBottom } from './composable/useScrollTopBottom';
 import TextPlayer from './components/TextPlayer.vue';
 import Window from './components/Window.vue';
+import { usePointerDrag } from './composable/usePointerDrag';
 
-export { Btn, Overlay, Dialog, TileList, useScrollTop, useScrollBottom, TextPlayer, Window };
+export { Btn, Overlay, Dialog, TileList, useScrollTop, useScrollBottom, TextPlayer, Window, usePointerDrag };
