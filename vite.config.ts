@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
@@ -25,6 +26,21 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
         },
+      },
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    include: ['src/**/*.test.ts'],
+    coverage: {
+      provider: 'v8',
+      include: ['src/components/**/*.{vue,ts}', 'src/composable/**/*.ts'],
+      exclude: ['src/**/*.test.ts'],
+      thresholds: {
+        statements: 98,
+        branches: 90,
+        functions: 100,
+        lines: 99,
       },
     },
   },

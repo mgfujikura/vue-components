@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Overlay from '../components/Overlay.vue';
+import Overlay from './Overlay.vue';
 import Window, { WindowProps } from './Window.vue';
 import { computed } from 'vue';
 
@@ -14,13 +14,12 @@ const props = defineProps<
   }
 >();
 
-const backgroundStyle = computed(() => {
-  const style = props.backgroundStyle || {};
-  style.display = 'flex';
-  style.justifyContent = 'center';
-  style.alignItems = 'center';
-  return style;
-});
+const backgroundStyle = computed(() => ({
+  ...(props.backgroundStyle ?? {}),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
 </script>
 <template>
   <Overlay

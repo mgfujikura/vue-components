@@ -29,7 +29,11 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/composable/useScrollTopBottomts"
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/App.vue",
+    "src/main.ts"
   ]
 }

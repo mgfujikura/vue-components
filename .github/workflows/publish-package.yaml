@@ -8,7 +8,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkuout
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
@@ -22,13 +22,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
+          node-version: 22
+          cache: pnpm
           registry-url: https://npm.pkg.github.com
           scope: '@mgfujikura'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:check
+
+      - name: Test
+        run: pnpm test:run
+
       - name: Build npm package
-        run: pnpm i --frozen-lockfile && pnpm run build
+        run: pnpm run build
 
       - name: Publish npm package
         run: pnpm publish --no-git-checks

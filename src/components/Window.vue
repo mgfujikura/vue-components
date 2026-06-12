@@ -27,7 +27,6 @@ const windowStyle = computed(() => {
   if (props.width) style.width = R.isNumber(props.width) ? `${props.width}px` : props.width;
   if (props.height) style.height = R.isNumber(props.height) ? `${props.height}px` : props.height;
   if (props.nineSlice) {
-    console.log('props.nineSlice', props.nineSlice);
     style.borderImage = `url(${props.img})`;
     if (R.isNumber(props.nineSlice)) {
       style.borderImageWidth = `${props.nineSlice}px`;
@@ -35,17 +34,14 @@ const windowStyle = computed(() => {
     } else {
       const nineSlice = props.nineSlice as any;
       for (const p of Object.keys(nineSlice)) {
-        console.log('p', p);
         const name = 'borderImage' + p.charAt(0).toUpperCase() + p.slice(1);
         style[name] = nineSlice[p];
-        console.log('name', name, nineSlice[p]);
       }
     }
   } else {
     if (props.img) style.background = `center/100% 100% no-repeat url(${props.img})`;
   }
   if (props.radius) style.borderRadius = R.isNumber(props.radius) ? props.radius + 'px' : props.radius;
-  console.log(style);
   return style;
 });
 
@@ -92,9 +88,6 @@ const contentStyle = computed(() => {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-}
-.FwComponentWindow_title {
-  /* タイトル部分のスタイル */
 }
 .FwComponentWindow_content {
   /* コンテンツ部分のスタイル */
