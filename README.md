@@ -18,20 +18,28 @@ https://docs.github.com/ja/packages/working-with-a-github-packages-registry/work
 
 ## コンポーネント
 
-### Btn ボタン
+各コンポーネントの props や表示例は Storybook で確認できます。
 
-### Overlay オーバーレイ
+```
+pnpm storybook
+```
 
-### Dialog ダイアログ
+起動後、ブラウザで http://localhost:6006 を開いてください。
 
-### TileList タイルリスト
+提供コンポーネント:
 
-### TextPlayer テキストプレーヤー
-
-##$ Window ウィンドウ
+- Btn（ボタン）
+- Overlay（オーバーレイ）
+- Dialog（ダイアログ）
+- TileList（タイルリスト）
+- TextPlayer（テキストプレーヤー）
+- Window（ウィンドウ）
 
 ## コンポーザブル
 
-### useScrollTop, useScrollBottom
+各コンポーザブルの動作例も Storybook で確認できます。
 
-### usePointerDrag
+提供コンポーザブル:
+
+- useScrollTop, useScrollBottom（スクロール端の検出）
+- usePointerDrag（ポインタによるドラッグ）
