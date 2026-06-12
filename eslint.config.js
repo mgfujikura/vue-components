@@ -44,9 +44,10 @@ export default defineConfigWithVueTs(
   },
   {
     name: 'app/test-files',
-    files: ['src/**/*.test.ts'],
+    files: ['src/**/*.test.ts', 'src/**/*.stories.ts'],
     rules: {
       'vue/one-component-per-file': 'off',
     },
   },
+  storybook.configs['flat/recommended'],
 );
