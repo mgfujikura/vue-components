@@ -42,6 +42,17 @@ describe('Dialog', () => {
     expect(backgroundStyle).toEqual({ padding: '8px' });
   });
 
+  it('windowClass / windowStyle を Window に伝搬する', () => {
+    const wrapper = mountDialog({
+      windowClass: 'my-window',
+      windowStyle: { border: '2px solid red' },
+    });
+
+    const root = wrapper.find('.FwComponentWindow');
+    expect(root.classes()).toContain('my-window');
+    expect((root.element as HTMLElement).style.border).toContain('2px solid red');
+  });
+
   it('closeOnBackgroundClick で背景クリック時に閉じる', async () => {
     const onUpdate = vi.fn();
     const wrapper = mountDialog({
@@ -52,5 +63,39 @@ describe('Dialog', () => {
     await wrapper.find('.FwComponentOverlay').trigger('click');
 
     expect(onUpdate).toHaveBeenCalledWith(false);
+  });
+
+  it('背景クリックで閉じたとき reason backdrop の close を emit する', async () => {
+    const wrapper = mountDialog({ closeOnBackgroundClick: true });
+
+    await wrapper.find('.FwComponentOverlay').trigger('click');
+
+    expect(wrapper.emitted('close')).toEqual([['backdrop']]);
+  });
+
+  it('model が true から false へ変化したとき reason programmatic の close を emit する', async () => {
+    const wrapper = mountDialog();
+
+    await wrapper.setProps({ modelValue: false });
+
+    expect(wrapper.emitted('close')).toEqual([['programmatic']]);
+  });
+
+  it('model が false から true へ変化したとき open を emit する', async () => {
+    const wrapper = mountDialog({ modelValue: false });
+
+    await wrapper.setProps({ modelValue: true });
+
+    expect(wrapper.emitted('open')).toEqual([[]]);
+  });
+
+  it('背景クリック時に backdropClick を MouseEvent 付きで emit する', async () => {
+    const wrapper = mountDialog();
+
+    await wrapper.find('.FwComponentOverlay').trigger('click');
+
+    const emitted = wrapper.emitted('backdropClick');
+    expect(emitted).toHaveLength(1);
+    expect(emitted?.[0][0]).toBeInstanceOf(MouseEvent);
   });
 });

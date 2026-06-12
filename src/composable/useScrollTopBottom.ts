@@ -1,11 +1,11 @@
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, type Ref } from 'vue';
 
 interface ScrollEdgeOptions {
   ignoreInitial?: boolean;
 }
 
 export function useScrollTop(
-  rootRef: { value: HTMLElement | null },
+  rootRef: Ref<HTMLElement | null>,
   callback: () => void,
   options: ScrollEdgeOptions = {},
 ) {
@@ -20,7 +20,7 @@ export function useScrollTop(
 }
 
 export function useScrollBottom(
-  rootRef: { value: HTMLElement | null },
+  rootRef: Ref<HTMLElement | null>,
   callback: () => void,
   options: ScrollEdgeOptions = {},
 ) {
@@ -35,7 +35,7 @@ export function useScrollBottom(
 }
 
 function useScrollEdge(
-  rootRef: { value: HTMLElement | null },
+  rootRef: Ref<HTMLElement | null>,
   sentinelAppender: (sentinel: HTMLElement) => void,
   callback: () => void,
   options: ScrollEdgeOptions,

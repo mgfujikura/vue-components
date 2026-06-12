@@ -4,10 +4,10 @@ import * as R from 'remeda';
 
 const props = defineProps<{
   img?: string;
-  disabled?: any;
+  disabled?: boolean;
   imgDisabled?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   nineSlice?:
     | number
     | {
@@ -21,8 +21,8 @@ const props = defineProps<{
 
 const style = computed(() => {
   const style: any = {};
-  if (props.width) style.width = `${props.width}px`;
-  if (props.height) style.height = `${props.height}px`;
+  if (props.width) style.width = R.isNumber(props.width) ? `${props.width}px` : props.width;
+  if (props.height) style.height = R.isNumber(props.height) ? `${props.height}px` : props.height;
   if (props.nineSlice) {
     style.borderImage = `url(${props.img})`;
     if (props.disabled && props.imgDisabled) style.borderImage = `url(${props.imgDisabled})`;

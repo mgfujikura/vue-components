@@ -6,7 +6,7 @@ export type WindowProps = {
   width: number | string;
   height?: number | string;
   img?: string;
-  titleHeight?: number;
+  titleHeight?: number | string;
   nineSlice?:
     | number
     | {
@@ -15,15 +15,12 @@ export type WindowProps = {
         width?: string;
       };
   radius?: number | string;
-  windowClass?: any;
-  windowStyle?: { [key: string]: any };
 };
 
 const props = defineProps<WindowProps>();
 
-// ウィンドウ本体のスタイル計算
 const windowStyle = computed(() => {
-  const style: any = {};
+  const style: Record<string, string> = {};
   if (props.width) style.width = R.isNumber(props.width) ? `${props.width}px` : props.width;
   if (props.height) style.height = R.isNumber(props.height) ? `${props.height}px` : props.height;
   if (props.nineSlice) {
@@ -32,10 +29,12 @@ const windowStyle = computed(() => {
       style.borderImageWidth = `${props.nineSlice}px`;
       style.borderImageSlice = `${props.nineSlice} fill`;
     } else {
-      const nineSlice = props.nineSlice as any;
-      for (const p of Object.keys(nineSlice)) {
+      const nineSlice = props.nineSlice;
+      for (const p of Object.keys(nineSlice) as (keyof typeof nineSlice)[]) {
+        const value = nineSlice[p];
+        if (value === undefined) continue;
         const name = 'borderImage' + p.charAt(0).toUpperCase() + p.slice(1);
-        style[name] = nineSlice[p];
+        style[name] = value;
       }
     }
   } else {
@@ -46,13 +45,15 @@ const windowStyle = computed(() => {
 });
 
 const titleStyle = computed(() => {
-  const style: any = {};
-  if (props.titleHeight) style.height = R.isNumber(props.titleHeight) ? `${props.titleHeight}px` : props.titleHeight;
+  const style: Record<string, string> = {};
+  if (props.titleHeight !== undefined) {
+    style.height = R.isNumber(props.titleHeight) ? `${props.titleHeight}px` : props.titleHeight;
+  }
   return style;
 });
 
 const contentStyle = computed(() => {
-  const style: any = {};
+  const style: Record<string, string> = {};
   if (titleStyle.value.height) {
     style.height = `calc(100% - ${titleStyle.value.height})`;
   } else {
@@ -64,7 +65,6 @@ const contentStyle = computed(() => {
 <template>
   <div
     class="FwComponentWindow"
-    :class="windowClass"
     :style="windowStyle"
     @click.stop=""
   >
@@ -84,13 +84,11 @@ const contentStyle = computed(() => {
 </template>
 <style scoped>
 .FwComponentWindow {
-  /* Dialogと同じ基本レイアウトを継承 */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 .FwComponentWindow_content {
-  /* コンテンツ部分のスタイル */
   flex: 1;
   overflow: auto;
 }

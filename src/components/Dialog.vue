@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import Overlay from './Overlay.vue';
+import type { CSSProperties, HTMLAttributes } from 'vue';
+import Overlay, { type OverlayCloseReason } from './Overlay.vue';
 import Window, { WindowProps } from './Window.vue';
 import { computed } from 'vue';
 
 const props = defineProps<
   WindowProps & {
-    dialogClass?: any;
-    dialogStyle?: { [key: string]: any };
+    windowClass?: HTMLAttributes['class'];
+    windowStyle?: CSSProperties;
     backgroundColor?: string;
     closeOnBackgroundClick?: boolean;
-    backgroundClass?: any;
-    backgroundStyle?: { [key: string]: any };
+    backgroundClass?: HTMLAttributes['class'];
+    backgroundStyle?: CSSProperties;
   }
 >();
+
+const model = defineModel<boolean>();
+const emit = defineEmits<{
+  open: [];
+  close: [reason: OverlayCloseReason];
+  backdropClick: [event: MouseEvent];
+}>();
 
 const backgroundStyle = computed(() => ({
   ...(props.backgroundStyle ?? {}),
@@ -23,10 +31,14 @@ const backgroundStyle = computed(() => ({
 </script>
 <template>
   <Overlay
+    v-model="model"
     :color="backgroundColor"
     :close-on-click="closeOnBackgroundClick"
     :style="backgroundStyle"
     :class="backgroundClass"
+    @open="emit('open')"
+    @close="(reason) => emit('close', reason)"
+    @backdrop-click="(event) => emit('backdropClick', event)"
   >
     <Window
       :width="props.width"
@@ -35,8 +47,8 @@ const backgroundStyle = computed(() => ({
       :title-height="props.titleHeight"
       :nine-slice="props.nineSlice"
       :radius="props.radius"
-      :window-class="props.dialogClass"
-      :window-style="props.dialogStyle"
+      :class="props.windowClass"
+      :style="props.windowStyle"
     >
       <template #title>
         <slot name="title" />
@@ -45,5 +57,3 @@ const backgroundStyle = computed(() => ({
     </Window>
   </Overlay>
 </template>
-
-<style></style>

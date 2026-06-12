@@ -1,24 +1,45 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useAttrs, watch, type StyleValue } from 'vue';
+
+defineOptions({ inheritAttrs: false });
+
+export type OverlayCloseReason = 'backdrop' | 'programmatic';
 
 const props = defineProps<{
-  style?: { [key: string]: any };
-  class?: any;
   color?: string;
   closeOnClick?: boolean;
 }>();
 const model = defineModel<boolean>();
+const emit = defineEmits<{
+  open: [];
+  close: [reason: OverlayCloseReason];
+  backdropClick: [event: MouseEvent];
+}>();
+const attrs = useAttrs();
+
+// 次に閉じる際の理由。背景クリック以外（親による v-model 変更等）は programmatic とみなす。
+let closeReason: OverlayCloseReason = 'programmatic';
+
+watch(model, (value, oldValue) => {
+  if (value && !oldValue) {
+    emit('open');
+  }
+  if (oldValue && !value) {
+    emit('close', closeReason);
+    closeReason = 'programmatic';
+  }
+});
 
 const color = computed(() => {
   return props.color || '#00000099';
 });
 
-const cls = computed(() => {
-  return props.class;
-});
+const overlayStyle = computed((): StyleValue => [{ backgroundColor: color.value }, attrs.style as StyleValue]);
 
-const onClick = () => {
+const onClick = (event: MouseEvent) => {
+  emit('backdropClick', event);
   if (props.closeOnClick) {
+    closeReason = 'backdrop';
     model.value = false;
   }
 };
@@ -28,13 +49,8 @@ const onClick = () => {
     <div
       v-if="model"
       class="FwComponentOverlay"
-      :class="cls"
-      :style="[
-        {
-          backgroundColor: color,
-        },
-        style,
-      ]"
+      :class="attrs.class"
+      :style="overlayStyle"
       @click="onClick"
     >
       <slot />

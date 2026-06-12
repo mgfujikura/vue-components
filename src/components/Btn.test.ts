@@ -3,6 +3,15 @@ import { describe, expect, it } from 'vitest';
 import Btn from './Btn.vue';
 
 describe('Btn', () => {
+  it('width / height が文字列のときそのまま適用する', () => {
+    const wrapper = mount(Btn, {
+      props: { width: '10rem', height: '3em' },
+    });
+
+    expect((wrapper.element as HTMLButtonElement).style.width).toBe('10rem');
+    expect((wrapper.element as HTMLButtonElement).style.height).toBe('3em');
+  });
+
   it('width / height を px 付き style に変換する', () => {
     const wrapper = mount(Btn, {
       props: { width: 120, height: 40 },

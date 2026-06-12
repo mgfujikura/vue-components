@@ -83,6 +83,32 @@ describe('Window', () => {
     expect(wrapper.find('.FwComponentWindow_content').text()).toBe('Window Body');
   });
 
+  it('class / style 属性をルート要素に適用する', () => {
+    const wrapper = mount(Window, {
+      props: { width: 300 },
+      attrs: {
+        class: 'custom-window',
+        style: { boxShadow: '0 2px 8px rgba(0,0,0,0.15)' },
+      },
+    });
+
+    const root = wrapper.find('.FwComponentWindow');
+    expect(root.classes()).toContain('custom-window');
+    expect((root.element as HTMLElement).style.boxShadow).toContain('0 2px 8px');
+  });
+
+  it('titleHeight が文字列のときそのまま適用する', () => {
+    const wrapper = mount(Window, {
+      props: { width: 300, height: 200, titleHeight: '3rem' },
+    });
+
+    const titleStyle = wrapper.find('.FwComponentWindow_title').attributes('style') ?? '';
+    const contentStyle = wrapper.find('.FwComponentWindow_content').attributes('style') ?? '';
+
+    expect(titleStyle).toContain('height: 3rem');
+    expect(contentStyle).toContain('height: calc(100% - 3rem)');
+  });
+
   it('titleHeight 指定時にコンテンツ高さを calc で調整する', () => {
     const wrapper = mount(Window, {
       props: { width: 300, height: 200, titleHeight: 40 },

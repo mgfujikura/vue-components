@@ -16,6 +16,10 @@ https://docs.github.com/ja/packages/working-with-a-github-packages-registry/work
 //npm.pkg.github.com/:_authToken=[GITHUB_TOKEN]
 ```
 
+## バージョンアップ（1.0.0）
+
+1.0.0 では prop 名・型・CSS クラス名の破壊的変更を行います。移行内容の詳細は [MIGRATION.md](./MIGRATION.md) を参照してください。
+
 ## コンポーネント
 
 各コンポーネントの props や表示例は Storybook で確認できます。

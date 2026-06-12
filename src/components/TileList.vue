@@ -1,18 +1,23 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue';
+import * as R from 'remeda';
+
+const props = defineProps<{
   columns: number;
-  gap: string;
+  gap: number | string;
 }>();
+
+const gapValue = computed(() => (R.isNumber(props.gap) ? `${props.gap}px` : props.gap));
 </script>
 <template>
-  <div class="TileList">
+  <div class="FwComponentTileList">
     <slot />
   </div>
 </template>
 <style scoped>
-.TileList {
+.FwComponentTileList {
   display: grid;
-  gap: v-bind(gap);
+  gap: v-bind(gapValue);
   grid-template-columns: repeat(v-bind(columns), 1fr);
 }
 </style>

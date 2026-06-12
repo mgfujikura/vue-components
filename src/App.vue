@@ -244,8 +244,8 @@ const pos = computed(() => {
     :title-height="32"
     :radius="12"
     :nine-slice="20"
-    window-class="custom-window"
-    :window-style="{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }"
+    class="custom-window"
+    :style="{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }"
   >
     <template #title>
       <div style="text-align: center; font-weight: bold; color: #333">Windowタイトル</div>
@@ -268,7 +268,7 @@ const pos = computed(() => {
         width: '90px 90px 90px 420px',
         repeat: 'stretch',
       }"
-      window-class="novel-window"
+      class="novel-window"
     >
       <template #title>
         <div style="padding-left: 70px; padding-top: 13px; font-size: 1.5em; font-weight: bold; color: white">

@@ -94,14 +94,14 @@ onUnmounted(() => {
 <template>
   <div
     ref="player"
-    class="TextPlayer"
+    class="FwComponentTextPlayer"
     @click="end"
   >
     {{ visibleText }}
   </div>
 </template>
 <style scoped>
-.TextPlayer {
+.FwComponentTextPlayer {
   width: 100%;
   height: calc(1em * v-bind(maxLines));
   overflow-y: hidden;
