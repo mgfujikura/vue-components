@@ -8,16 +8,19 @@ const props = defineProps<{
 }>();
 
 const gapValue = computed(() => (R.isNumber(props.gap) ? `${props.gap}px` : props.gap));
+
+const gridStyle = computed(() => ({
+  gap: gapValue.value,
+  gridTemplateColumns: `repeat(${props.columns}, 1fr)`,
+}));
 </script>
 <template>
-  <div class="FwComponentTileList">
+  <div class="FwComponentTileList" :style="gridStyle">
     <slot />
   </div>
 </template>
 <style scoped>
 .FwComponentTileList {
   display: grid;
-  gap: v-bind(gapValue);
-  grid-template-columns: repeat(v-bind(columns), 1fr);
 }
 </style>

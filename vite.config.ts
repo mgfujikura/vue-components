@@ -39,7 +39,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/components/**/*.{vue,ts}', 'src/composable/**/*.ts'],
-      exclude: ['src/**/*.test.ts'],
+      exclude: ['src/**/*.test.ts', 'src/**/*.stories.ts'],
       thresholds: {
         statements: 98,
         branches: 90,

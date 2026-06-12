@@ -21,5 +21,6 @@ describe('TileList', () => {
     const root = wrapper.find('.FwComponentTileList');
     expect(root.exists()).toBe(true);
     expect(root.element.tagName).toBe('DIV');
+    expect(root.attributes('style')).toContain('12px');
   });
 });
