@@ -1,0 +1,12 @@
+---
+description: Composable（src/composable）の実装規約
+globs: src/composable/**/*.ts
+alwaysApply: false
+---
+
+# Composable
+
+- DOM 参照の取得・監視・クリーンアップを内部で完結させる。
+- オプションベースの柔軟な API を提供する。
+- UI 側に sentinel 要素や observer 設定を要求しない。
+- 命名は `useXxx` とし、責務を 1 つに絞る。
